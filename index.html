@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <title>Wiki - Diseño de controladores por realimentación de estados observados</title>
+  
+  
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:type" content="article">
+
+
+  
+  
+  <link rel="stylesheet" type="text/css" href="./Control por Realimentación de Estados - Control Digital Wiki_files/e805f.css" media="all">
+  <style id="wp-block-library-inline-css" type="text/css">
+  .has-text-align-justify{text-align:justify;}
+  </style>
+
+  <link rel="stylesheet" type="text/css" href="./Control por Realimentación de Estados - Control Digital Wiki_files/e805f(1).css" media="all">
+  <style id="wptelegram-widget--blocks-inline-css" type="text/css">
+  :root {--wptelegram-widget-join-link-bg-color: #389ce9;--wptelegram-widget-join-link-color: #fff}
+  </style>
+  <style id="global-styles-inline-css" type="text/css">
+  body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--duotone--dark-grayscale: url('#wp-duotone-dark-grayscale');--wp--preset--duotone--grayscale: url('#wp-duotone-grayscale');--wp--preset--duotone--purple-yellow: url('#wp-duotone-purple-yellow');--wp--preset--duotone--blue-red: url('#wp-duotone-blue-red');--wp--preset--duotone--midnight: url('#wp-duotone-midnight');--wp--preset--duotone--magenta-yellow: url('#wp-duotone-magenta-yellow');--wp--preset--duotone--purple-green: url('#wp-duotone-purple-green');--wp--preset--duotone--blue-orange: url('#wp-duotone-blue-orange');--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+  </style>
+
+  <link rel="stylesheet" type="text/css" href="./Control por Realimentación de Estados - Control Digital Wiki_files/e805f(2).css" media="all">
+  <style id="orbital-style-inline-css" type="text/css">
+  .primary-menu li.menu-item-has-children:focus > ul, .primary-menu li.menu-item-has-children.focus > ul {
+  right: 0;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.15s linear, transform 0.15s linear;
+  }
+  </style>
+  
+  <link rel="stylesheet" type="text/css" href="./Control por Realimentación de Estados - Control Digital Wiki_files/e805f(3).css" media="all">
+  
+  
+    <style type="text/css">
+  .wpcp {background: #f7f7f7; padding: 16px 20px; border-radius: 5px; line-height: 20px;}
+  </style>
+ 
+  
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-config" content="/wp-content/uploads/fbrfg/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff"><style>img#wpstats{display:none}</style>
+  <style>
+  @media(min-width: 48rem){
+  .container {
+  width: 74rem;
+  }
+  .entry-content {
+  max-width: 65.5%;
+  flex-basis: 65.5%;
+  }
+  .entry-aside {
+  max-width: 34.5%;
+  flex-basis: 34.5%;
+  order: 0;
+  -ms-flex-order: 0;
+  }
+  }
+  a {
+  color: #2196f3;
+  }
+  .site-header {
+  background-color: #ffffff;
+  }
+  .site-header a {
+  color: ;
+  }
+  @media(min-width: 1040px){
+  .site-navbar .menu-item-has-children:after {
+  border-color: ;
+  }
+  }
+  </style>
+ 
+  <style type="text/css">.broken_link, a.broken_link {
+  text-decoration: line-through;
+  }</style>
+  <style type="text/css" id="wp-custom-css">/*Entradas*/
+  .single .title{
+  text-align: center;
+  }
+  /*Páginas*/
+  .page .title{
+  text-align: center;
+  }</style>
+  
+  <link rel="icon" href="favicon.png">
+
+  </head>
+
+
+<body data-rsssl="1" class="post-template-default single single-post postid-6608 single-format-standard layout-menu-orbital elementor-default elementor-kit-7105" background="Fondo2.png">
+    
+    
+    <div class="menu-modal cover-modal header-footer-group" data-modal-target-string=".menu-modal">
+        <div class="menu-modal-inner modal-inner">
+        <div class="menu-wrapper section-inner">
+        <div class="menu-top">
+
+        </div><!-- .menu-top -->
+        </div><!-- .menu-wrapper -->
+        </div><!-- .menu-modal-inner -->
+        </div><!-- .menu-modal -->
+        <main id="content" class="site-main post-6608 post type-post status-publish format-standard has-post-thumbnail category-sistemas-dinamicos-lineales tag-control-por-asignacion-de-polos tag-control-por-realimentacion-de-estados tag-control-realimentado tag-controlabilidad tag-descomposicion-de-kalman tag-espacio-de-estados tag-kalman tag-observabilidad tag-realimentacion-de-estados tag-variables-de-estado">
+        <header class="default-header">
+        <div class="container">
+        <div class="category">
+                            </div>
+        <h1 class="title">Diseño de controladores por realimentación de estados observados</h1>			
+        <div class="meta">
+        <span class="posted-on"></span>				</div>
+        </div>
+        </header>
+        <div id="content-wrapper" class="container flex">
+        <div class="entry-content">
+            <div class="banner desktop">
+        <div class="center fluid">
+        </div>
+        </div>
+        <div class="banner mobile">
+        <div class="center fluid">
+        </div>
+        </div>
+        
+        
+        
+        
+        <h5>Autores: Hermes Urbina - Adonis Gómez</h5>
+        <div id="toc_container" class="toc_white no_bullets"><p class="toc_title">Índice</p><ul class="toc_list">
+          
+          <li><a><span class="toc_number toc_depth_1"><FONT COLOR="brown"></FONT></span> <FONT COLOR="brown">Introducción</FONT></a></li>
+        <li><a><span class="toc_number toc_depth_1"><FONT COLOR="brown">1</FONT></span><FONT COLOR="brown"> Realimentación de Estados</FONT></a><ul>
+        <li><a><span class="toc_number toc_depth_2"><FONT COLOR="brown">1.1</FONT></span> <FONT COLOR="brown">Representación en Función de Transferencia</FONT></a></li>  
+        <li><a><span class="toc_number toc_depth_2"><FONT COLOR="brown">1.2</FONT></span><FONT COLOR="brown">Representación en Variables de Estado</FONT></a><ul>
+        
+        <li><a><span class="toc_number toc_depth_2"><FONT COLOR="brown">1.2</FONT></span><FONT COLOR="brown">Representación en Variables de Estado</FONT></a><ul><li><a><span class="toc_number toc_depth_3"><FONT COLOR="brown">1.2.1</FONT></span> <FONT COLOR="brown">Como la ganancia k afecta al sistema</FONT></a></li></ul></li>
+        <li><a><span class="toc_number toc_depth_2"><FONT COLOR="brown">1.3<FONT></span> <FONT COLOR="brown">Seguimiento de Referencia</FOBT></a></li>
+        <li><a><span class="toc_number toc_depth_2"><FONT COLOR="brown">1.4</FONT></span><FONT COLOR="brown"> Representación Entrada Salida</FONT></a></li></ul></li>
+        <li><a><span class="toc_number toc_depth_1"><FONT COLOR="brown">2</FONT></span><FONT COLOR="brown"> Regulación de Estados</FONT></a><ul><li><a><span class="toc_number toc_depth_2"><FONT COLOR="brown">2.1</FONT></span><FONT COLOR="brown"> Controlabilidad</FONT></a></li><li><a><span class="toc_number toc_depth_2"><FONT COLOR="brown">2.2</FONT></span><FONT COLOR="brown"> Observabilidad</FONT></a></li></ul></li>
+        <li><a><span class="toc_number toc_depth_1"><FONT COLOR="brown">3</FONT></span> <FONT COLOR="brown">Asignación de Polos</FONT></a></li>
+        <li><a><span class="toc_number toc_depth_1"><FONT COLOR="brown">4</FONT></span> <FONT COLOR="brown">Formula de Ackerman</FONT></a></li>
+        
+      
+        <li><a><span class="toc_number toc_depth_1"><FONT COLOR="brown">5</FONT></span> <FONT COLOR="brown">Comandos para aplicar en MATLAB</FONT></a>
+        <li><a><span class="toc_number toc_depth_1"><FONT COLOR="brown"></FONT></span> <FONT COLOR="brown">Referencias Bibliográficas</FONT></a></li></li></ul></div>
+        
+        <h2><span>Introducción</span></h2>
+        <p class="has-text-align-justify"><FONT COLOR="black">El modelo de variable de estado de un sistema dinámico comprende EDO de primer orden que describen las derivadas temporales de un conjunto de variables de estado. El número de variables de estado representa el orden del sistema, que se supone que coincide con el grado del polinomio del denominador en la descripción de su función de transferencia.</FONT></p>
+        <p class="has-text-align-justify"><FONT COLOR="black">Las variables naturales asociadas con los elementos de almacenamiento de energía se usan comúnmente como variables de estado, aunque se pueden seleccionar variables alternativas. Las variables naturales incluyen, por ejemplo, la tensión del condensador y la corriente del inductor en las redes eléctricas, y la posición y velocidad de la masa inercial en los sistemas mecánicos.</FONT></p>
+        <p class="has-text-align-justify"><FONT COLOR="black">En la siguiente wiki se abordarán los temas necesarios para diseñar controladores por realimentación de estado, desde conocer en que se basa la sealimentación de estado, la representaciónde un sistema en variables de estado, y conceptos básicos como controlabilidad y observabilidad de un sistema, hasta los métodos de asignación de polos y de Ackerman.</FONT></p>
+        
+        <h2><span id="Realimentacion_de_Estados">1 Realimentación de Estados</span></h2><div class="banner mobile"><div class=" ">
+        <script async="" src="./Control por Realimentación de Estados - Control Digital Wiki_files/f(6).txt"></script>
+        <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-8069005883680165" data-ad-slot="6836806327" data-adsbygoogle-status="done"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+        </div>
+        </div>
+
+        <p class="has-text-align-justify"><FONT COLOR="black">La retroalimentación de estado completo (FSF, por sus siglas en inglés), o colocación de polos, es un método empleado en la teoría del sistema de control de retroalimentación para colocar los polos de circuito cerrado de una planta en ubicaciones predeterminadas en el plano s. Es deseable colocar polos porque la ubicación de los polos corresponde directamente a los valores propios del sistema, que controlan las características de la respuesta del sistema.  El sistema debe considerarse controlable para implementar este método.</FONT></p>
+        <figure class="aligncenter size-large"><img src="Imagen1.jpg"><figcaption>Sistema en Lazo Abierto</figcaption></figure>
+
+        
+        
+        <h3><span id="Representacion_en_Funcion_de_Transferencia">1.1 Representación en Función de Transferencia</span></h3>
+
+        <p class="has-text-align-justify"><FONT COLOR="black">Partiendo de un sistema en lazo abierto, que inicialmente se considera en su representación de función de transferencia multiplicado por una ganancia k, como puede ser observado a continuación, demostrando que la dinámica efectivamente la gobiernan los polos:</FONT></p>
+        <div class="wp-block-image">
+        <figure class="aligncenter size-large"><img src="Imagen2.png"><figcaption>Sistema en Lazo Abierto representado por Función de Transferencia</figcaption></figure>
+        <p class="has-text-align-justify"><FONT COLOR="black">Pero al momento de realizar la realimentación negativa:</FONT></p>
+        <figure class="aligncenter size-large"><img src="Imagen3.png"><figcaption>Sistema con realimentación negativa</figcaption></figure>
+        <p class="has-text-align-justify"><FONT COLOR="black">La función de transferencia del diagrama de bloques en lazo cerrado vendría dada por:</FONT></p>
+        <figure class="aligncenter size-large"><img src="Imagen4.png"></figure>
+        <p class="has-text-align-justify"><FONT COLOR="black">Vemos que la ganancia k aparece en el polinomio del denominador (función característica) por lo tanto ahora esa ganancia tiene la capacidad de poder alterar los polos del sistema.</FONT></p>
+        <p class="has-text-align-justify"><FONT COLOR="black">Tomando como ejemplo, un sistema de segundo orden cualquiera:</FONT></p>
+        <figure class="aligncenter size-large"><img src="Imagen5.png"></figure>
+        <p class="has-text-align-justify"><FONT COLOR="black">Si colocamos esa función de transferencia dentro de la función de transferencia en lazo cerrado:</FONT></p>
+        <figure class="aligncenter size-large"><img src="Imagen6.png"></figure>
+        <p class="has-text-align-justify"><FONT COLOR="black">En este caso PARTICULAR, notemos que la ganancia k para este sistema solo afectaría el coeficiente del medio del sistema en lazo abierto (a1), sin embargo, no afecta el tercer coeficiente (a2).</FONT></p>
+        <p class="has-text-align-justify"><FONT COLOR="black">En consecuencia simplemente alterando el parámetro k, no hay posibilidad de escoger la ecuación característica del sistema, dado a que solo contamos con UN SOLO grado de libertad k para modificar este comportamiento y tenemos en este caso 2 coeficientes que deben ser alterados.</FONT></p>
+
+
+        <h3><span id="Representacion_en_Variables_de_Estado">1.2 Representación en Variables de Estado</span></h3>
+        <p class="has-text-align-justify"><FONT COLOR="black">En primer lugar, partiendo de la idea que solo queremos realizar regulación en nuestro sistema de control, o sea rechazar toda posible perturbación y mantener estable el sistema (referencia igual a cero)</FONT></p>
+        <p class="has-text-align-justify"><FONT COLOR="black">Por lo que representando el sistema en variables de estado:</FONT></p>
+        <figure class="aligncenter size-large"><img src="Imagen7.png"></figure>
+        <figure class="aligncenter size-large"><img src="Imagen8.png"><figcaption>Sistema SISO en Variables de Estado</figcaption></figure>
+        <p class="has-text-align-justify"><FONT COLOR="black">Partiendo de la idea de Kalman, de que que las entradas del sistema deben ser computadas usando el vector de estados, definimos la ley de control como una función de estado:</FONT></p>
+        <figure class="aligncenter size-large"><img src="Imagen9.png"></figure>
+        <p class="has-text-align-justify"><FONT COLOR="black">Con la idea de que la función no dependería del tiempo y que podría ser una función lineal, donde para indicar la realimentación negativa se coloca el menos al frente de k:</FONT></p>
+        <figure class="aligncenter size-large"><img src="Imagen10.png"></figure>
+        <p class="has-text-align-justify"><FONT COLOR="black">Como resultado, el producto entre una fila y una columna se obtiene un escalar (ley de control) para el caso SISO.</FONT></p>
+        <figure class="aligncenter size-large"><img src="Imagen11.png"></figure>
+        <p class="has-text-align-justify"><FONT COLOR="black">en donde:</FONT></p>
+        <figure class="aligncenter size-large"><img src="Imagen12.png"></figure>
+        <p class="has-text-align-justify"><FONT COLOR="black">En consecuencia, los autovalores de <img loading="lazy" src="./Control por Realimentación de Estados - Control Digital Wiki_files/quicklatex.com-d7362418daa005e3a2efb81a84b98170_l3.svg" class="ql-img-inline-formula quicklatex-auto-format" alt="\mathbf{\tilde{A}}" title="Rendered by QuickLaTeX.com" height="19" width="15" style="vertical-align: -1px;"> comienza a dominar la dinámica del nuevo sistema el cual es dependiente de la ganancia <img loading="lazy" src="./Control por Realimentación de Estados - Control Digital Wiki_files/quicklatex.com-3422b6bb5c160593658b7c39425d9880_l3.svg" class="ql-img-inline-formula quicklatex-auto-format" alt="k" title="Rendered by QuickLaTeX.com" height="13" width="9" style="vertical-align: 0px;"></FONT></p>
+
+        <h4><span id="Como_la_ganancia_k_afecta_al_sistema">1.2.1 ¿Cómo la ganancia k afecta al sistema?</span></h4>
+        <p class="has-text-align-justify"><FONT COLOR="black">Si comparamos esto con el primer ejemplo, vamos a notar inicialmente que en lugar de realimentar la salida del sistema, se está realimenta los estados y con eso, en lugar de tener una única ganancia <img loading="lazy" src="./Control por Realimentación de Estados - Control Digital Wiki_files/quicklatex.com-3422b6bb5c160593658b7c39425d9880_l3.svg" class="ql-img-inline-formula quicklatex-auto-format" alt="k" title="Rendered by QuickLaTeX.com" height="13" width="9" style="vertical-align: 0px;">, ahora pasamos a tener un vector de ganancias <img loading="lazy" src="./Control por Realimentación de Estados - Control Digital Wiki_files/quicklatex.com-3422b6bb5c160593658b7c39425d9880_l3.svg" class="ql-img-inline-formula quicklatex-auto-format" alt="k" title="Rendered by QuickLaTeX.com" height="13" width="9" style="vertical-align: 0px;">.</FONT></p>
+        <figure class="aligncenter size-large"><img src="Imagen13.png"></figure>
+        <p><FONT COLOR="black"Representando el sistema en la forma canónica controlable:</FONT></p>
+        <figure class="aligncenter size-large"><img src="Imagen14.png"></figure>
+        <p>aplicando la realimentación de estados:</p>
+        <figure class="aligncenter size-large"><img src="Imagen15.png"></figure>
+        <p class="has-text-align-justify">De esa forma, se vuelve factible poder modificar las <img loading="lazy" src="./Control por Realimentación de Estados - Control Digital Wiki_files/quicklatex.com-b170995d512c659d8668b4e42e1fef6b_l3.svg" class="ql-img-inline-formula quicklatex-auto-format" alt="n" title="Rendered by QuickLaTeX.com" height="8" width="11" style="vertical-align: 0px;"> raíces de la ecuación característica de nuestra función de transferencia.</p>
+        <p class="has-text-align-justify">Lo más importante, es entender que para poder modificar el comportamiento dinámico del sistema es necesario que el par <img loading="lazy" src="./Control por Realimentación de Estados - Control Digital Wiki_files/quicklatex.com-52b76abeb31d56d10016b1b00c8dd71b_l3.svg" class="ql-img-inline-formula quicklatex-auto-format" alt="\mathbf{A},\ \vec{b}" title="Rendered by QuickLaTeX.com" height="22" width="39" style="vertical-align: -4px;"> sean totalmente controlables.</p>
+        
+        <h3><span id="Seguimiento_de_Referencia">1.3 Seguimiento de Referencia</span></h3>
+        <p class="has-text-align-justify">Por otro lado, si deseo seguir una referencia, basta con agregar la referencia a la ecuación de la ley de control:</p>
+        <figure class="aligncenter size-large"><img src="Imagen16.png"></figure>
+        <p>Que nuevamente, en la representación de variables de estado vendría dado por:</p>
+        <figure class="aligncenter size-large"><img src="Imagen17.png"></figure>
+        <figure class="aligncenter size-large"><img src="Imagen18.png"></figure>
+
+        <h3><span id="Representacion_Entrada_Salida">1.4 Representación Entrada Salida</span></h3>
+        <p class="has-text-align-justify">Viendo la función de transferencia de lazo cerrado de nuestro sistema de realimentación de estados tenemos que:</p>
+        <p>Partiendo de la ecuación para transformar EE a FT</p>
+        <figure class="aligncenter size-large"><img src="Imagen19.png"></figure>
+        <p>La FT en lazo cerrado vendría dada por:</p>
+        <figure class="aligncenter size-large"><img src="Imagen20.png"></figure>
+        
+        <h2><span id="Regulacion_8211_Realimentacion_de_Estados">2 Regulación de Estados</span></h2>
+        <p class="has-text-align-justify">En el problema de regulación solo se está interesado en establecer una trayectoria del sistema, o rechazar perturbación o estabilizar la plantal</p>
+        <figure class="aligncenter size-large"><img src="Imagen21.png"></figure>
+        <p class="has-text-align-justify">En este punto es importante entender los conceptos de controlabilidad y observabilidad de un sistema.</p>
+        <p>Ya sabemos que la dinámica del sistema está dominada por los autovalores de <img loading="lazy" src="./Control por Realimentación de Estados - Control Digital Wiki_files/quicklatex.com-004461d38408c0cf60824460b30714e6_l3.svg" class="ql-img-inline-formula quicklatex-auto-format" alt="(\mathbf{A}-\vec{b}k)" title="Rendered by QuickLaTeX.com" height="22" width="66" style="vertical-align: -4px;"></p>
+        <p class="has-text-align-justify">Para el caso de la controlabilidad del sistema tenemos que si el par <img loading="lazy" src="./Control por Realimentación de Estados - Control Digital Wiki_files/quicklatex.com-633f527f6057fd596dbef201bab99766_l3.svg" class="ql-img-inline-formula quicklatex-auto-format" alt="(\mathbf{A}-\vec{b}k,b)" title="Rendered by QuickLaTeX.com" height="22" width="82" style="vertical-align: -4px;"> es controlable si y solamentesi< el par <img lading="lazy" src="./Control por Realimentación de Estados - Control Digital Wiki_files/quicklatex.com-0c941a1c72e97755e057508af4e11ce5_l3.svg" class="ql-img-inline-formula quicklatex-auto-format" alt="(\mathbf{A},\vec{b})" title="Rendered by QuickLaTeX.com" height="22" width="43" style="vertical-align: -4px;"> es controlable.</p>
+
+        <h3><span id="Controlabilidad">2.1 Controlabilidad</span></h3>
+        <p class="has-text-align-justify">La controlabilidad es una propiedad importante de un sistema de control, y la propiedad de controlabilidad juega un papel crucial en muchos problemas de control, como la estabilización de sistemas inestables por retroalimentación o el control óptimo.</p>
+        <p class="has-text-align-justify">La controlabilidad se define como la capacidad de un sistema de control para alcanzar un estado definido desde un estado fijo (inicial) en un tiempo finito.</p>
+        <p>Para demostrar este teorema podemos partir de un sistema de orden 4, <img loading="lazy" src="./Control por Realimentación de Estados - Control Digital Wiki_files/quicklatex.com-3d48be04aadb63e5661f86d0948d7553_l3.svg" class="ql-img-inline-formula quicklatex-auto-format" alt="n=4" title="Rendered by QuickLaTeX.com" height="13" width="43" style="vertical-align: -1px;"></p>
+        <p>donde la matriz de conrolabilidad suponemos es de rango completo (<img loading="lazy" src="./Control por Realimentación de Estados - Control Digital Wiki_files/quicklatex.com-da039068127cf2ec5fc05123d4d3546f_l3.svg" class="ql-img-inline-formula quicklatex-auto-format" alt="\rho" title="Rendered by QuickLaTeX.com" height="12" width="9" style="vertical-align: -4px;">) dado por:</p>
+        <figure class="aligncenter size-large"><img src="Imagen22.png"></figure>
+        <p>Pero en este caso se analiza la matriz de controlabilidad con la ley de control de realimentacion de estados:</p>
+        <figure class="aligncenter size-large"><img src="Imagen23.png"></figure>
+        <p class="has-text-align-justify">La matriz anterior se puede dividir en dos componentes que tendrá la forma de la matriz de controlabilidad de lazo abierto multiplicado por una matriz triangular superior:</p>
+        <figure class="aligncenter size-large"><img src="Imagen24.png"></figure>
+        <p class="has-text-align-justify">La matriz anterior es posible dividirla en dos componentes que tendrá la forma de la matriz de controlabilidad de lazo abierto multiplicado por una matriz triangular superior:</p>
+        <p class="has-text-align-center"><img loading="lazy" src="./Control por Realimentación de Estados - Control Digital Wiki_files/quicklatex.com-0264ff13c5ba6cd8322ba10dd1f3c3ef_l3.svg" class="ql-img-inline-formula quicklatex-auto-format" alt="\mathbb{C}_f=\underset{\rho(\cdot )=4}{\underbrace{\begin{bmatrix}\vec{b} &amp; \mathbf{A}\vec{b}&amp; \mathbf{A}^2\vec{b} &amp; \mathbf{A}^3\vec{b}\end{bmatrix}}}\underset{\rho(\cdot )=4}{\underbrace{\begin{bmatrix}1 &amp; -k\vec{b} &amp; -k(\mathbf{A}-\vec{b}k)\vec{b} &amp; -k(\mathbf{A}-\vec{b}k)^2\vec{b}\\0 &amp; 1&amp; -k\vec{b} &amp; -k(\mathbf{A}-\vec{b}k)\vec{b}\\0&amp; 0&amp; 1&amp; -k\vec{b}\\0&amp; 0&amp; 0&amp; 1\end{bmatrix}}}" title="Rendered by QuickLaTeX.com" height="125" width="522" style="vertical-align: -72px;"></p>
+        <p class="has-text-align-justify">Se evidencia que ambas matrices son de rango completo, la primera mtriz obviamente es, dado que es la controlabilidad de lazo abierto y la segunda observemos que su determinante e 1<, rango igual  4, por lo tanto se muestra que la realimentacón de estados preserva la controlabilidad del sistema<.</p>
+
+        <h3><spn id=" Observabilidad">2.2 Observabilidad</span></h3>
+        <p class="has-text-align-justify">La observabilidad es la capacidad de medir los estados internos de un sistema examinando sus salidas. Un sistema se considera "observable" si el estado actual se puede estimar utilizando solo la información de los resultados, es decir, los datos del sensor.</p>
+        <p class="has-text-align-justify">La obsevabilidad de estados por otro lado va a depender de larealimentación de estados utilizada< en el sistema Es decir que la realimentación de estados no siempre va a garantizar la obsevabilidad del sistema.</p>
+        <p class="has-text-align-justify">Un ejemplo típico donde podemos perder observabilidad es cuando el sistema no tiene una realización mínima (o sea que puede existir un cancelamiento dentre un polo y un cero) Por lo tanto si se modifica los autovalores del sistema para un cero va a existir un cancelamiento y si esto ocurre se pierde la observabilidad.</p>
+
+        <h2><span id="Asignacion_de_Polos_8211_Caso_1">3 Asignación de Polos </span></h2>
+        <p class="has-text-align-justify">Una de las formas de proyectar la acción de control para obtener una dinámica deseada en lazo cerrado es ubicando los autovalores de la matriz A en una región deseada siempre y cuando dicho sistema sea controlable.</p>
+        <p class="has-text-align-justify">El método más sencillo de abordar este proyecto de control es utilizando la forma canónica controlable  del sistema.</p>
+        <p>La cual parte de una función de transferencia expresada en la forma:</p>
+        <figure class="aligncenter size-large"><img src="Imagen25.png"></figure>
+        <p>Donde la forma canónica controlable (FCC) es:</p>
+        <p class="has-text-align-center"><img loading="lazy" src="./Control por Realimentación de Estados - Control Digital Wiki_files/quicklatex.com-619c2f75b623e100d2710c06d6138ac8_l3.svg" class="ql-img-inline-formula quicklatex-auto-format" alt="\begin{bmatrix}\dot{x_1}(t)\\\dot{x_2}(t)\\\dot{x_3}(t)\\\dot{x_4}(t)\end{bmatrix}=\begin{bmatrix}-\alpha_1 &amp; -\alpha_2 &amp; -\alpha_3 &amp; -\alpha_4\\1&amp;0&amp;0&amp;0\\0&amp;1&amp;0&amp;0\\0&amp;0&amp;1&amp;0\end{bmatrix}\begin{bmatrix}x_1(t)\\x_2(t)\\x_3(t)\\x_4(t)\end{bmatrix}+\begin{bmatrix}1\\0\\0\\0 \end{bmatrix}u(t)" title="Rendered by QuickLaTeX.com" height="85" width="434" style="vertical-align: -38px;"></p>
+        <p class="has-text-align-center"><img loading="lazy" src="./Control por Realimentación de Estados - Control Digital Wiki_files/quicklatex.com-da4c3e39f6eec158031315556e0bcdaa_l3.svg" class="ql-img-inline-formula quicklatex-auto-format" alt="y(s)=\begin{bmatrix}\beta_1&amp;\beta_2&amp;\beta_3&amp;\beta_4 \end{bmatrix}\vec{x}(t)" title="Rendered by QuickLaTeX.com" height="22" width="221" style="vertical-align: -7px;"></p>
+        <p class="has-text-align-justify">Observemos que la primera fila de la matriz A de la FCC pertenece a la ecuación característica del sistema (denominador de la función de transferencia en caso de ser controlable), donde recordemos que la ecuación característica es la encargada de definir los autovalores.</p>
+        <p>Si un sistema lineal de dimensión n es controlable, entonces existe una realimentación de estados que va a posicionar arbitrariamente los autovalores de la matriz <img loading="lazy" src="./Control por Realimentación de Estados - Control Digital Wiki_files/quicklatex.com-004461d38408c0cf60824460b30714e6_l3.svg" class="ql-img-inline-formula quicklatex-auto-format" alt="(\mathbf{A}-\vec{b}k)" title="Rendered by QuickLaTeX.com" height="22" width="66" style="vertical-align: -4px;"></p>
+        <p>El lazo cerrado viene dado por:</p>
+        <p class="has-text-align-center"><img loading="lazy" src="./Control por Realimentación de Estados - Control Digital Wiki_files/quicklatex.com-5f16aa87a85af9ea85dcf21d554f027e_l3.svg" class="ql-img-inline-formula quicklatex-auto-format" alt="\begin{bmatrix}\dot{x_1}(t)\\\dot{x_2}(t)\\\dot{x_3}(t)\\\dot{x_4}(t)\end{bmatrix}=\begin{bmatrix}-(\alpha_1+k_1) &amp; -(\alpha_2+k_2) &amp; -(\alpha_3+k_3) &amp; -(\alpha_4+k_4)\\1&amp;0&amp;0&amp;0\\0&amp;1&amp;0&amp;0\\0&amp;0&amp;1&amp;0\end{bmatrix}\begin{bmatrix}x_1(t)\\x_2(t)\\x_3(t)\\x_4(t)\end{bmatrix}+\begin{bmatrix}1\\0\\0\\0 \end{bmatrix}r(t)" title="Rendered by QuickLaTeX.com" height="175" width="577" style="vertical-align: -38px;"></p>
+        <p>Su ecuación característica por:</p>
+        <p class="has-text-align-center"><img loading="lazy" src="./Control por Realimentación de Estados - Control Digital Wiki_files/quicklatex.com-1308ad854dd2dedc5e6ca89c14ca255d_l3.svg" class="ql-img-inline-formula quicklatex-auto-format" alt="\Delta_f=s^4+(\alpha_1+k_1) s^3+(\alpha_2+k_2)s^2+(\alpha_3+k_3)s+(\alpha_4+k_4)" title="Rendered by QuickLaTeX.com" height="21" width="475" style="vertical-align: -6px;"></p>
+        <figure class="aligncenter size-large"><img src="Imagen25.png"></figure>
+
+
+        <h2><span id="Ubicacion_de_Polos_por_Formula_de_Ackerman_8211_Caso_2">4 Formula de Ackerman </span></h2>
+        <p class="has-text-align-justify">Cuando nos enfrentamos a un problema de control en variables de estado monovariable (SISO), otra de las formas de encontrar la matriz de ganancias K de la realimentación de Estados es Usando la formula de Ackerman. </p>
+        <p class="has-text-align-justify">Esta fórmula permite calcular directamente la matriz de ganancia de realimentación en el espacio de estados, a partir de la siguiente ecuación si el sistema está en la forma canónica controlable (FCC):</p>
+        <p class="has-text-align-center"><img loading="lazy" src="./Control por Realimentación de Estados - Control Digital Wiki_files/quicklatex.com-55ea54ae8bd32993de4ec6fb7bd7060f_l3.svg" class="ql-img-inline-formula quicklatex-auto-format" alt="\mathbf{k}=\begin{bmatrix}0&amp; 0 &amp; … &amp; 1\end{bmatrix}\ \ \mathbb{C}^{-1}\ \ \mathbf{\phi(A)}" title="Rendered by QuickLaTeX.com" height="22" width="245" style="vertical-align: -7px;"></p>
+        <p>donde <img loading="lazy" src="./Control por Realimentación de Estados - Control Digital Wiki_files/quicklatex.com-68da13602f004ced593a0442bca3f363_l3.svg" class="ql-img-inline-formula quicklatex-auto-format" alt="\mathbb{C}" title="Rendered by QuickLaTeX.com" height="12" width="13" style="vertical-align: 0px;"> es la matriz de controlabilidad del sistema y <img loading="lazy" src="./Control por Realimentación de Estados - Control Digital Wiki_files/quicklatex.com-083c75b517c563de7090fed37076b0f2_l3.svg" class="ql-img-inline-formula quicklatex-auto-format" alt="\mathbf{\phi(A)}" title="Rendered by QuickLaTeX.com" height="19" width="39" style="vertical-align: -5px;"> viene dado por:</p>
+        <p class="has-text-align-center"><img loading="lazy" src="./Control por Realimentación de Estados - Control Digital Wiki_files/quicklatex.com-1384bade5e149d8f287d36a04d5507e2_l3.svg" class="ql-img-inline-formula quicklatex-auto-format" alt="\mathbf{\phi(A)}=\lambda^n+\alpha_1\lambda^{n-1}+\alpha_2\lambda^{n-2}+…+\alpha_{n-1}\lambda+\alpha_n" title="Rendered by QuickLaTeX.com" height="20" width="395" style="vertical-align: -5px;"></p>
+        <p>siendo <img loading="lazy" src="./Control por Realimentación de Estados - Control Digital Wiki_files/quicklatex.com-cba9aced03bba26ada83e45f4cccac85_l3.svg" class="ql-img-inline-formula quicklatex-auto-format" alt="\alpha_1,\alpha_2,...,\alpha_n" title="Rendered by QuickLaTeX.com" height="12" width="95" style="vertical-align: -4px;"> los coeficientes de la ecuación característica deseada.</p>
+
+
+        <h2><span id="Comandos_en_MATLAB">5 Comandos en MATLAB</span></h2>
+
+        <p>Para terminar se dejan una serie de comandos de MATLAB para realizar el cálculo de las ganancias de un control por realimentación de estados mostradas en esta entrada:</p>
+
+        <p>Para un sistema SISO puede ser empleado el comando de Ackerman de Matlab:</p>
+        <p class="has-medium-font-size">&gt;&gt; k2 = acker(A,b,Ed)</p>
+        <ul><li>k2 = La ganancia por Realimentación de Estados</li><li>A = Matriz de Estados</li><li>b = Vector de entrada</li><li>Ed = Vector con los polos de la ecuación característica deseada.</li></ul>
+        <p>Un comando más general para el calculo de la realimentación de estados es el place:</p>
+        <p class="has-medium-font-size">&gt;&gt; k = place(A,B,Ed)</p>
+        <ul><li>k = La ganancia por Realimentación de Estados</li><li>A = Matriz de Estados</li><li>B = Matriz de entrada</li><li>Ed = Vector con los polos de la ecuación característica deseada.</li></ul>
+
+        <h2><span>Referencias Bibliográficas</span></h2>
+        
+        <p class="has-text-align-justify">Autor: D. Inman, in Encyclopedia of Vibration, M. Sami Fadali, Antonio Visioli, in Digital Control Engineering (Third Edition), 2020,2001. Nombre de la página: sciencedirect. URL: https://www.sciencedirect.com/topics/engineering/state-feedback. Fecha: 19/10/2022</p>
+        <p class="has-text-align-justify">Autor: Elizabeth Villota Cerna. Nombre de la página: Bionanouni URL: http://bionanouni.wdfiles.com/local--files/teaching-mt227-horario/Clase05-03.pdf. Fecha: 19/10/2022.</p>
+        <p class="has-text-align-justify">Autor: DISEÑO DE SISTEMAS CONTROL MEDIANTE REALIMENTACIÓN DEL ESTADO. Nombre de la página: coolab. URL: http://coolab.umh.es/sea/control/Tema7.pdf. Fecha: 19/10/2022</p>
+        <p class="has-text-align-justify">Autor: Fernando di sciascio. Nombre de la página: dea.unsj URL: http://dea.unsj.edu.ar/control2/Clase08a-Controlporrealimentaciondeestados.pdf. Fecha: 19/10/2022.</p>
+        <p class="has-text-align-justify">Autor: Full state feedback. Nombre de la página: Wikipedia. URL: https://en.wikipedia.org/wiki/Full_state_feedback. Fecha de expediccion: 4 September 2020. Fecha de visita: 19/10/2022.</p>
+
+</body>
+</html>
