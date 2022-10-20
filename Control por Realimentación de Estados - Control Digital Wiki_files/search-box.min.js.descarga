@@ -1,0 +1,1 @@
+function orbital_expand_navbar(){var a=document.getElementById("search-navbar");a.classList.contains("expand-searchform")?a.classList.remove("expand-searchform"):(a.classList.add("expand-searchform"),document.getElementById("search-input").focus())}
